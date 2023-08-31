@@ -23,17 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value.trim();
     const confirmPasswordValue = confirmPasswordInput.value.trim();
-	const scriptPath = '/var/www/zotero/admin/create-user.sh';
-  	//const exec = require('child_process').exec;
+
     if (passwordValue !== confirmPasswordValue) {
-      alert('Passwords do not match');
-    } else { 
-  	const userData = {
+      alert('Пароли не совпадают');
+    } else {
+      const userData = {
         username: usernameValue,
         email: emailValue,
         password: passwordValue
       };
-	console.log(userData);
+
       fetch('http://192.168.62.81:3000/create-user', {
         method: 'POST',
         headers: {
@@ -41,13 +40,28 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         body: JSON.stringify(userData)
       })
-      .then(response => response.json())
-      .then(data => {
-        alert('User created');
-        location.reload();
+      .then(response => {
+        if (response.status === 403) {
+          return response.json().then(data => {
+            if (data.message === 'username') {
+              alert('Пользователь с таким именем уже существует');
+            } else if (data.message === 'email') {
+              alert('Пользователь с таким email уже существует');
+            } else if (data.message === 'usernamemail') {
+              alert('Пользователь с таким именем и email уже существует');
+            } else {
+              throw new Error('Ошибка сервера');
+            }
+          });
+        } else if (response.status === 200) {
+          alert('Пользователь успешно создан');
+          location.reload();
+        } else {
+          throw new Error('Ошибка сервера');
+        }
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Ошибка:', error);
       });
     }
   }
