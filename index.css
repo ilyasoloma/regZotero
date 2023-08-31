@@ -55,3 +55,12 @@ form h1 {
 .btn[enabled]:hover {
   background-color: #14a20a;
 }
+form p {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  background-image: linear-gradient(to top, #553c9a, #ee4b2b);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
