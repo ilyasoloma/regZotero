@@ -23,10 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value.trim();
     const confirmPasswordValue = confirmPasswordInput.value.trim();
-
+    
     if (passwordValue !== confirmPasswordValue) {
       alert('Пароли не совпадают');
     } else {
+      const regex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?№«»—–\s]/g;
+      var checkPass = passwordValue.replace(regex, '');
+      if (checkPass == passwordValue){
       const userData = {
         username: usernameValue,
         email: emailValue,
@@ -63,6 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => {
         console.error('Ошибка:', error);
       });
+    } else{
+    	alert('В пароле недопустимы специальные символы и пробелы');
+    }
     }
   }
 
