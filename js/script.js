@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			}
 		};
-		fetch('http://192.168.62.111:8080/keys', {
+		fetch('https://192.168.62.111/cors/http://192.168.62.111:8080/keys', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			email: emailValue,
 			password: passwordValue
 		};
-		fetch('http://192.168.62.111:3000/create-user', {
+		fetch('create-user', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
